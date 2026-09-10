@@ -1,0 +1,1220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Internal Tool</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400&display=swap">
+
+<style>
+  :root {
+    --orange: #EF8B22;
+    --blue: #0979C3;
+    --green: #69995d;
+    --red: #B4453B;
+
+    --ground: #F1F2F3;
+    --card: #FFFFFF;
+    --card-2: #F8F9FA;
+    --ink: #27343D;
+    --ink-2: #53575A;
+    --ink-3: #7C8288;
+    --rule: #DDE1E4;
+    --rule-2: #C6CCD1;
+
+    --good-bg: #EFF5EC;
+    --good-ink: #416B37;
+    --good-edge: #8FB584;
+    --bad-bg: #FBF0EF;
+    --bad-ink: #99392F;
+    --bad-edge: #D3A19B;
+
+    --exp-bg: #EDF4F9;
+    --exp-ink: #0A6AAC;
+    --exp-edge: #A9CBE4;
+
+    --shadow: 0 1px 2px rgba(39,52,61,.06), 0 6px 20px rgba(39,52,61,.05);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #14191D;
+      --card: #1D252B;
+      --card-2: #232C33;
+      --ink: #EDF0F2;
+      --ink-2: #B4BCC2;
+      --ink-3: #8A9298;
+      --rule: #2E383F;
+      --rule-2: #3C474F;
+
+      --orange: #F59B3C;
+      --blue: #4FA9E0;
+      --green: #8CBB80;
+      --red: #E08078;
+
+      --good-bg: #1C2A19;
+      --good-ink: #9CCB8F;
+      --good-edge: #3E5C36;
+      --bad-bg: #2C1B18;
+      --bad-ink: #E39C93;
+      --bad-edge: #5E3831;
+
+      --exp-bg: #162835;
+      --exp-ink: #6FBDEC;
+      --exp-edge: #2F4E68;
+
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.22);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #14191D;
+    --card: #1D252B;
+    --card-2: #232C33;
+    --ink: #EDF0F2;
+    --ink-2: #B4BCC2;
+    --ink-3: #8A9298;
+    --rule: #2E383F;
+    --rule-2: #3C474F;
+
+    --orange: #F59B3C;
+    --blue: #4FA9E0;
+    --green: #8CBB80;
+    --red: #E08078;
+
+    --good-bg: #1C2A19;
+    --good-ink: #9CCB8F;
+    --good-edge: #3E5C36;
+    --bad-bg: #2C1B18;
+    --bad-ink: #E39C93;
+    --bad-edge: #5E3831;
+
+    --exp-bg: #162835;
+    --exp-ink: #6FBDEC;
+    --exp-edge: #2F4E68;
+
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.22);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink-2);
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-size: 16.5px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 900px; margin: 0 auto; padding: 40px 22px 80px; }
+
+  /* ---------- header ---------- */
+
+  header { margin-bottom: 42px; }
+
+  .eyebrow {
+    font-family: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+    font-size: 15px; letter-spacing: .14em; color: var(--orange); margin: 0 0 10px;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+    font-weight: 400; font-size: clamp(40px, 7.5vw, 62px);
+    line-height: .98; letter-spacing: .005em; color: var(--ink);
+    margin: 0 0 16px; text-wrap: balance;
+  }
+
+  .standfirst {
+    font-size: 19px; line-height: 1.55; color: var(--ink-2);
+    max-width: 63ch; margin: 0 0 22px;
+  }
+
+  .meta {
+    display: flex; flex-wrap: wrap; gap: 8px 10px;
+    padding-top: 20px; border-top: 2px solid var(--ink);
+  }
+
+  .tag {
+    font-family: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+    font-size: 14px; letter-spacing: .09em; color: var(--ink-2);
+    background: var(--card); border: 1px solid var(--rule);
+    border-radius: 3px; padding: 5px 11px 3px;
+  }
+
+  /* ---------- sections ---------- */
+
+  section { margin-top: 50px; }
+
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+
+  h2 {
+    font-family: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+    font-weight: 400; font-size: 30px; line-height: 1.1;
+    letter-spacing: .03em; color: var(--ink); margin: 0;
+  }
+
+  .sec-head .line { flex: 1; height: 3px; background: var(--orange); opacity: .9; }
+
+  .sec-note { font-size: 15.5px; color: var(--ink-3); margin: 0 0 22px; max-width: 68ch; }
+
+  /* ---------- lead ---------- */
+
+  .lead {
+    background: var(--card); border: 1px solid var(--rule);
+    border-left: 5px solid var(--orange); border-radius: 4px;
+    box-shadow: var(--shadow); padding: 26px 28px 22px;
+  }
+
+  .lead .kicker {
+    font-family: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+    font-size: 15px; letter-spacing: .12em; color: var(--orange); margin: 0 0 8px;
+  }
+
+  .lead h3 {
+    font-size: 21px; font-weight: 700; line-height: 1.35;
+    color: var(--ink); margin: 0 0 16px; text-wrap: balance;
+  }
+
+  .lead p { margin: 0 0 12px; }
+  .lead p:last-child { margin-bottom: 0; }
+
+  .why {
+    margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--rule);
+    font-size: 15.5px; color: var(--ink-3);
+  }
+
+  /* ---------- the five fields ---------- */
+
+  .field {
+    background: var(--card); border: 1px solid var(--rule);
+    border-radius: 4px; box-shadow: var(--shadow);
+    padding: 22px 24px; margin-bottom: 16px;
+  }
+
+  .field-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 14px; flex-wrap: wrap; margin-bottom: 4px;
+  }
+
+  .field h3 {
+    font-family: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+    font-weight: 400; font-size: 23px; letter-spacing: .04em;
+    color: var(--ink); margin: 0;
+  }
+
+  .rate {
+    font-family: 'Roboto Mono', ui-monospace, monospace;
+    font-size: 13px; letter-spacing: .02em; color: var(--ink-3);
+    white-space: nowrap;
+  }
+  .rate b { color: var(--ink); font-weight: 400; }
+
+  .prompt {
+    background: var(--card-2); border: 1px dashed var(--rule-2);
+    border-radius: 4px; padding: 13px 16px; margin: 14px 0 16px;
+    font-size: 14.5px; color: var(--ink-3); line-height: 1.5;
+  }
+  .prompt em {
+    display: block; font-family: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+    font-size: 13px; letter-spacing: .1em; font-style: normal;
+    color: var(--ink-3); margin-bottom: 6px;
+  }
+  .prompt span { color: var(--ink-2); }
+
+  .asks { font-size: 16px; margin: 0 0 18px; }
+  .asks b { color: var(--ink); }
+
+  .ex { border-radius: 4px; padding: 14px 17px; margin-bottom: 10px; font-size: 15.5px; }
+  .ex:last-child { margin-bottom: 0; }
+
+  .ex .mark {
+    font-family: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+    font-size: 13.5px; letter-spacing: .1em; display: block; margin-bottom: 7px;
+  }
+
+  .ex-good { background: var(--good-bg); border: 1px solid var(--good-edge); }
+  .ex-good .mark { color: var(--good-ink); }
+  .ex-bad  { background: var(--bad-bg);  border: 1px solid var(--bad-edge); }
+  .ex-bad  .mark { color: var(--bad-ink); }
+
+  .ex q { color: var(--ink); font-style: normal; }
+  .ex .said {
+    display: block; font-size: 13.5px; color: var(--ink-3);
+    margin-bottom: 5px; letter-spacing: .01em;
+  }
+  .ex .credit {
+    display: block; margin-top: 8px;
+    font-family: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+    font-size: 13px; letter-spacing: .08em; color: var(--orange);
+  }
+  .ex ul { margin: 6px 0 0; padding-left: 20px; }
+  .ex li { margin-bottom: 6px; }
+  .ex li:last-child { margin-bottom: 0; }
+
+  .test {
+    margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--rule);
+    font-size: 15.5px; color: var(--ink-2);
+  }
+  .test b {
+    font-family: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+    font-weight: 400; font-size: 14px; letter-spacing: .08em; color: var(--ink);
+  }
+  .test i { color: var(--ink); font-style: italic; }
+
+  /* ---------- expected answer ---------- */
+
+  .expect {
+    background: var(--exp-bg); border: 1px solid var(--exp-edge);
+    border-left: 4px solid var(--blue);
+    border-radius: 4px; padding: 15px 18px; margin-bottom: 14px; font-size: 15.5px;
+  }
+
+  .expect .mark {
+    font-family: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+    font-size: 13.5px; letter-spacing: .1em; display: block;
+    margin-bottom: 7px; color: var(--exp-ink);
+  }
+
+  .expect q { color: var(--ink); font-style: normal; }
+
+  .expect .alt {
+    display: block; margin-top: 12px; padding-top: 11px;
+    border-top: 1px dashed var(--exp-edge);
+  }
+
+  .expect .alt em {
+    display: block; font-style: normal;
+    font-family: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+    font-size: 12.5px; letter-spacing: .09em; color: var(--exp-ink);
+    margin-bottom: 5px;
+  }
+
+  .expect .shape {
+    display: block; margin-top: 11px;
+    font-family: 'Roboto Mono', ui-monospace, monospace;
+    font-size: 12.5px; line-height: 1.5; color: var(--ink-3);
+  }
+  .expect .shape b {
+    font-family: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+    font-weight: 400; font-size: 13px; letter-spacing: .09em; color: var(--exp-ink);
+  }
+
+  /* ---------- form copy block ---------- */
+
+  .formfix { display: flex; flex-direction: column; gap: 12px; }
+
+  .fx {
+    background: var(--card); border: 1px solid var(--rule);
+    border-radius: 4px; padding: 15px 18px;
+  }
+  .fx.is-new { border-left: 4px solid var(--orange); }
+
+  .fx .which {
+    font-family: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+    font-size: 15px; letter-spacing: .07em; color: var(--ink);
+    display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap;
+    margin-bottom: 9px;
+  }
+  .fx .flag {
+    font-size: 12px; letter-spacing: .09em; color: var(--orange);
+    border: 1px solid var(--orange); border-radius: 3px; padding: 2px 7px 0;
+  }
+  .fx code {
+    display: block; font-family: 'Roboto Mono', ui-monospace, monospace;
+    font-size: 13.5px; line-height: 1.6; color: var(--ink);
+    background: var(--card-2); border: 1px solid var(--rule);
+    border-radius: 3px; padding: 11px 14px; white-space: pre-wrap;
+  }
+  .fx .note { display: block; margin-top: 8px; font-size: 14.5px; color: var(--ink-3); }
+
+  /* ---------- side by side ---------- */
+
+  .sbs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .col {
+    background: var(--card); border: 1px solid var(--rule);
+    border-radius: 4px; overflow: hidden;
+  }
+  .col.is-bad  { border-color: var(--bad-edge); }
+  .col.is-good { border-color: var(--good-edge); }
+
+  .col-head {
+    font-family: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+    font-size: 16px; letter-spacing: .09em; padding: 11px 16px 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .col.is-bad  .col-head { background: var(--bad-bg);  color: var(--bad-ink);  border-bottom-color: var(--bad-edge); }
+  .col.is-good .col-head { background: var(--good-bg); color: var(--good-ink); border-bottom-color: var(--good-edge); }
+
+  .col dl { margin: 0; padding: 6px 16px 14px; }
+  .col dt {
+    font-family: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+    font-size: 12.5px; letter-spacing: .09em; color: var(--ink-3);
+    margin-top: 13px;
+  }
+  .col dd { margin: 3px 0 0; font-size: 15px; color: var(--ink); }
+  .col.is-bad dd { color: var(--ink-2); }
+
+  .movers {
+    background: var(--card-2); border: 1px solid var(--rule);
+    border-radius: 4px; padding: 16px 20px; margin-bottom: 14px;
+  }
+  .movers .kicker {
+    font-family: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+    font-size: 14px; letter-spacing: .1em; color: var(--ink-3); margin: 0 0 8px;
+  }
+  .movers dl { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 22px; }
+  .movers dt {
+    font-family: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+    font-size: 12.5px; letter-spacing: .09em; color: var(--ink-3);
+  }
+  .movers dd { margin: 0 0 4px; font-size: 15.5px; color: var(--ink); }
+
+  /* ---------- the bar ---------- */
+
+  .bar { background: var(--card); border: 1px solid var(--rule); border-radius: 4px; padding: 4px 0; }
+
+  .bar div {
+    display: flex; gap: 16px; align-items: baseline;
+    padding: 16px 22px; border-bottom: 1px solid var(--rule); font-size: 16px;
+  }
+  .bar div:last-child { border-bottom: 0; }
+
+  .bar .n {
+    font-family: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+    font-size: 22px; color: var(--orange); flex: 0 0 22px; line-height: 1;
+  }
+  .bar b { color: var(--ink); }
+
+  /* ---------- tally ---------- */
+
+  .tally {
+    background: var(--card); border: 1px solid var(--rule);
+    border-left: 5px solid var(--red); border-radius: 4px; padding: 20px 24px 18px;
+  }
+  .tally .kicker {
+    font-family: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+    font-size: 15px; letter-spacing: .12em; color: var(--red); margin: 0 0 12px;
+  }
+  .tally ul { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 9px; }
+  .tally li { font-size: 16px; }
+  .tally b { color: var(--ink); }
+
+  /* ---------- practices ---------- */
+
+  .practices { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 12px; }
+
+  .practice {
+    background: var(--card); border: 1px solid var(--rule);
+    border-radius: 4px; padding: 15px 18px;
+  }
+  .practice strong { display: block; color: var(--ink); font-size: 16.5px; line-height: 1.35; margin-bottom: 4px; }
+  .practice span { font-size: 15px; color: var(--ink-2); }
+  .practice .credit {
+    display: block; margin-top: 7px;
+    font-family: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+    font-size: 13.5px; letter-spacing: .08em; color: var(--orange);
+  }
+
+  /* ---------- guardrail ---------- */
+
+  .guardrail {
+    background: var(--card); border: 1px solid var(--rule);
+    border-left: 5px solid var(--ink); border-radius: 4px; padding: 20px 24px 18px;
+  }
+  .guardrail .kicker {
+    font-family: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+    font-size: 15px; letter-spacing: .12em; color: var(--ink); margin: 0 0 10px;
+  }
+  .guardrail ul { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 10px; }
+  .guardrail li { font-size: 16px; }
+
+  footer {
+    margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--rule);
+    font-size: 14.5px; color: var(--ink-3);
+  }
+
+  b, strong { color: var(--ink); }
+
+  @media (max-width: 640px) {
+    .sbs { grid-template-columns: 1fr; }
+    .movers dl { grid-template-columns: 1fr; }
+    .bar div { flex-direction: column; gap: 6px; }
+  }
+
+  @media print {
+    body { background: #fff; color: #000; font-size: 11pt; }
+    .wrap { padding: 0; max-width: none; }
+    .field, .lead, .col, .bar, .tally, .practice { box-shadow: none; break-inside: avoid; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">EINSTEIN &middot; MOVER TRAINING APP &middot; MANAGER STANDARD</p>
+    <h1>How to run a one-on-one check-in</h1>
+    <p class="standfirst">
+      In five weeks you have completed 336 one-on-ones with 178 movers &mdash; a conversation that
+      did not exist as a process before August. That is the win, and I want to say it plainly
+      before anything else. The gap is not effort and it is not adoption. It is that a mover who
+      writes <q>I need help stacking the truck</q> deserves an answer, and right now about two
+      thirds of them get a score instead. This is the standard, field by field: what we expect to
+      see in each box, plus real answers from the app on both sides of the line.
+    </p>
+    <div class="meta">
+      <span class="tag">5 FIELDS</span>
+      <span class="tag">A MODEL ANSWER FOR EACH</span>
+      <span class="tag">1 WORKED CHECK-IN</span>
+      <span class="tag">THE BAR &mdash; 5 CHECKS</span>
+      <span class="tag">THE WARNING LADDER</span>
+      <span class="tag">DATA THROUGH 9/8</span>
+    </div>
+  </header>
+
+  <section>
+    <div class="sec-head">
+      <h2>Start here &mdash; what we found</h2>
+      <div class="line"></div>
+    </div>
+    <p class="sec-note">
+      Mike pulled every check-in written in the app since launch &mdash; all 10 branches, 336
+      completed one-on-ones, 1,680 manager answers. This is what it showed.
+    </p>
+
+    <div class="lead">
+      <p class="kicker">THE HEADLINE</p>
+      <h3>We are doing the check-ins. In 42% of the boxes we are not writing anything in them.</h3>
+      <p>
+        <b>The worst field is the one that matters most.</b> <q>Acknowledge their feedback</q> is
+        63% filler. That box exists to prove you heard what the mover just told you. Two thirds of
+        the time nobody answered it. Movers are writing real things &mdash; <q>I need better
+        copilots</q>, <q>stacking the truck</q>, <q>more support on long jobs</q>, <q>more
+        hours</q> &mdash; and getting <q>10/10</q> back.
+      </p>
+      <p>
+        <b>The best field is <q>Expectations going forward</q> at 14% filler.</b> It is also the
+        only field in the form that says out loud <q>This should never be left empty.</q> That is
+        not a coincidence, and it is most of what this page is built on.
+      </p>
+      <p>
+        <b>The managers at the top of the table are not writing more than everyone else.</b> One of
+        them has written 14 check-ins total. They are just answering the question in front of them.
+        This is not a volume problem and it is not a time problem.
+      </p>
+      <p class="why">
+        Where it stands right now: 95 movers have answered their side and are waiting on a manager
+        &mdash; the oldest for 13 days. Two branches hold most of that. If you have people waiting,
+        that is the first thing to clear.
+        <br><br>
+        <b>One convention before the examples:</b> every model answer on this page is written
+        <b>to the mover</b>, in the second person, the same way the app&rsquo;s own built-in
+        examples are. Write it as if he is going to read it back later, because that is the version
+        that holds up if the conversation ever needs to.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>The five fields</h2>
+      <div class="line"></div>
+    </div>
+    <p class="sec-note">
+      Each field below gives you four things: <b>the prompt exactly as it appears in your box</b>,
+      what it is actually asking for, <b>a model answer &mdash; what we expect to see</b>, and then
+      real answers from the app on both sides of the line. Copy the shape of the model, not the
+      words. The good real examples are credited by name; the weak ones are not, because the point
+      is the pattern and not the person. Every field closes with the one question to check your
+      answer against before you hit complete.
+    </p>
+
+    <div class="field">
+      <div class="field-head">
+        <h3>1 &middot; Attendance</h3>
+        <span class="rate">FILLER RATE <b>44%</b></span>
+      </div>
+      <div class="prompt">
+        <em>WHAT THE BOX SAYS</em>
+        <span>Any attendance trends to address? Consistently late? Always calls out on weekends?<br>
+        Ex. You are currently sitting with X late points and X callout points. You need to work on
+        showing up on time and ready to work.</span>
+      </div>
+      <p class="asks">
+        <b>What it is asking:</b> what you observed, and what happens about it. <b>Two numbers go in
+        this box, not one:</b> the late and callout points, <b>and the mover&rsquo;s EMC Games
+        attendance score.</b> The points are on the same screen you are typing on, and the Games
+        score is on the games dashboard you are already in every day &mdash; so this is a glance,
+        not a research project. Use it, because it is the attendance number that actually costs him
+        something: attendance is one of the scored Games categories and it feeds his total.
+        <b>7 is baseline, 8&ndash;9 is strong, 10 and up is where bonus lives.</b>
+      </p>
+      <div class="expect">
+        <span class="mark">&#9670; WHAT WE EXPECT TO SEE &mdash; SOMEONE DRIFTING</span>
+        <q>You are at 3 of 8 late points and 1 of 4 callout points, and your Games attendance score
+        is 6.4 &mdash; under the 7 baseline, and right now it is the category pulling your total
+        down. Both of the recent lates were Mondays, so that reads as a pattern rather than one bad
+        morning. Be clocked in by 6:45 on Mondays; get that score back over 7 and this stops being
+        a topic.</q>
+        <span class="alt">
+          <em>AND WHEN SOMEONE IS DOING IT RIGHT &mdash; SAY THE NUMBER ANYWAY</em>
+          <q>1 of 8 late points, no callouts, and your Games attendance score is a 9.6 &mdash; top
+          third of the branch. You are two tenths off the 10 that puts attendance into bonus
+          territory. Keep the Mondays clean and you get there this season.</q>
+        </span>
+        <span class="shape"><b>THE SHAPE &middot;</b> the point totals &rarr; the Games attendance
+        score against the 7 baseline &rarr; what you observed &rarr; what changes going forward</span>
+      </div>
+
+      <div class="ex ex-good">
+        <span class="mark">&#10003; HALF RIGHT &mdash; A REAL ONE FROM THE APP</span>
+        <q>Sitting at 1 of 8 late points and 0.5 of 4 callout points, no trend. First late was this
+        morning &mdash; going forward the expectation is that this stays to an absolute minimum.</q>
+        <span class="credit" style="color:var(--ink-3)">Better than most: real point totals, a
+        read on whether it is a trend, and a stated expectation. <b>Under the new standard it is
+        still short one number</b> &mdash; no Games attendance score, so the mover has no idea what
+        those lates are costing him on the board.</span>
+      </div>
+      <div class="ex ex-bad">
+        <span class="mark">&#10007; THIS DOES NOT</span>
+        <q>x/10</q> &mdash; one manager answered attendance this way in 84 of his 88 check-ins.
+        A score on its own is not an observation. The mover cannot tell from a bare number whether
+        he is fine, drifting, or one callout from a conversation &mdash; and a number with no scale
+        on it is worse than none, because <q>x/10</q> is not even the scale the Games run on.
+      </div>
+      <p class="test">
+        <b>THE TEST &mdash;</b> <i>does your answer carry both numbers &mdash; the points and the
+        Games attendance score &mdash; and would the mover know from it whether he needs to change
+        something tomorrow?</i>
+      </p>
+    </div>
+
+    <div class="field">
+      <div class="field-head">
+        <h3>2 &middot; Handbook progression</h3>
+        <span class="rate">FILLER RATE <b>37%</b></span>
+      </div>
+      <div class="prompt">
+        <em>WHAT THE BOX SAYS</em>
+        <span>Has the mover been locked out of their training since the last check in? Do they have
+        a solid velocity showing they are taking the training seriously? Have you needed to deny a
+        bunch of tasks since the last check in?<br>
+        Ex. You are currently at X% complete with a velocity of X tasks per day. You are currently
+        ahead/behind on your progress.</span>
+      </div>
+      <p class="asks">
+        <b>What it is asking:</b> where they are, and whether that is on pace. Percentage and
+        velocity are both on the screen. Use the numbers.
+      </p>
+      <div class="expect">
+        <span class="mark">&#9670; WHAT WE EXPECT TO SEE</span>
+        <q>You are at 62% with a velocity of 1.4 tasks a day and no lockouts since we last talked.
+        That is ahead of pace to finish Stage 4 inside the quarter. Keep the daily tasks going on
+        your own and bring me the onsite eval items so we knock those out together.</q>
+        <span class="shape"><b>THE SHAPE &middot;</b> percent and velocity &rarr; ahead or behind
+        pace &rarr; the next specific step</span>
+      </div>
+
+      <div class="ex ex-good">
+        <span class="mark">&#10003; THIS WORKS</span>
+        <q>Stay engaged in your training dashboard. If there is no progress made (you are currently
+        at 55%) by 9/11/26 a final written warning may be issued.</q>
+        <span class="credit">KHEVAN DUECK &middot; MCKINNEY</span>
+      </div>
+      <div class="ex ex-good">
+        <span class="mark">&#10003; THIS WORKS</span>
+        <q>Please start engaging with the mover training app. You are behind and the quarter is
+        rapidly ending. Start with the daily tasks and making time when scheduled to get items
+        knocked out.</q>
+        <span class="credit">ZACHARY KRODEL &middot; MCKINNEY</span>
+      </div>
+      <div class="ex ex-bad">
+        <span class="mark">&#10007; THIS DOES NOT</span>
+        <q>GTG</q> &middot; <q>Done</q> &middot; <q>-</q> &mdash; between them, 97 answers across
+        the company. All three submit, and the check-in then locks as complete.
+      </div>
+      <p class="test">
+        <b>THE TEST &mdash;</b> <i>does your answer contain a number?</i>
+      </p>
+    </div>
+
+    <div class="field">
+      <div class="field-head">
+        <h3>3 &middot; Peer feedback</h3>
+        <span class="rate">FILLER RATE <b>53%</b></span>
+      </div>
+      <div class="prompt">
+        <em>WHAT THE BOX SAYS</em>
+        <span>What has the team been saying this person needs to work on? Anything mgmt needs to
+        point out for them to work on?<br>
+        Ex. Feedback from the team is that you need to stay off your phone in the field and make
+        sure you are wrapping things fully.</span>
+      </div>
+      <p class="asks">
+        <b>What it is asking:</b> what their crew says about working with them. This field is an
+        instruction to go ask somebody before you sit down. It cannot be answered from your desk.
+      </p>
+      <div class="expect">
+        <span class="mark">&#9670; WHAT WE EXPECT TO SEE</span>
+        <q>Asked your lead and one of the guys you ran with last week. Both said your wrapping has
+        gotten noticeably faster. The one thing that came back was staying off your phone during
+        load-in &mdash; nobody called it a problem, but it is the thing to tighten before you get
+        looked at for lead.</q>
+        <span class="shape"><b>THE SHAPE &middot;</b> who you asked &rarr; what came back, the good
+        and the one thing &rarr; what to do with it</span>
+      </div>
+
+      <div class="ex ex-good">
+        <span class="mark">&#10003; THIS WORKS</span>
+        <q>Just need to stay off the phone and show more engagement in morning truck duties. Wraps
+        and moving skills are there; we just need more ownership over results to make you a lead.</q>
+      </div>
+      <div class="ex ex-bad">
+        <span class="mark">&#10007; THIS DOES NOT</span>
+        <q>Zero negative feedback</q> &middot; <q>N/A</q> &middot; blank. Usually this means nobody
+        was asked. If you genuinely heard nothing, say who you asked and that they had nothing
+        &mdash; that is a real answer and it takes six more words.
+      </div>
+      <p class="test">
+        <b>THE TEST &mdash;</b> <i>can you name the person whose feedback you are passing on?</i>
+      </p>
+    </div>
+
+    <div class="field">
+      <div class="field-head">
+        <h3>4 &middot; Acknowledge their feedback</h3>
+        <span class="rate">FILLER RATE <b>63%</b> &mdash; WORST FIELD</span>
+      </div>
+      <div class="prompt">
+        <em>WHAT THE BOX SAYS</em>
+        <span>Did the mover ask any questions or provide any feedback that needs some context or
+        better clarity for them to understand?</span>
+      </div>
+      <p class="asks">
+        <b>What it is asking:</b> the answer to the thing they just asked for. Read that wording
+        again though &mdash; it lands like a yes/no question, which is exactly why this field is
+        the worst one in the app. If you have been writing <q>Yes</q>, or writing down what the
+        mover said, you were answering the question as written. <b>We are rewriting the prompt and
+        adding a worked example.</b> In the meantime, treat this box as: <b>quote what they asked,
+        then say what you are doing about it.</b>
+      </p>
+      <div class="expect">
+        <span class="mark">&#9670; WHAT WE EXPECT TO SEE &mdash; THE EXAMPLE THE BOX IS MISSING</span>
+        <q>You said you need more support on long jobs. Here is what we are doing: anything over
+        eight hours gets a third mover on the truck from here on, and I will call you at the
+        halfway point. If a job is running long and you did not get either one, text me during the
+        job &mdash; do not just push through it and tell me after.</q>
+        <span class="alt">
+          <em>AND IF THEY GENUINELY RAISED NOTHING</em>
+          <q>You did not bring anything up this time, and I asked your lead too &mdash; he had
+          nothing outstanding for you either. If something comes up before the next check-in, come
+          find me. You do not have to wait for this conversation.</q>
+        </span>
+        <span class="shape"><b>THE SHAPE &middot;</b> quote what they asked for &rarr; what you are
+        doing about it &rarr; what they do if it happens again</span>
+      </div>
+
+      <div class="ex ex-good">
+        <span class="mark">&#10003; THIS WORKS</span>
+        <span class="said">THE MOVER ASKED FOR HYDRATION SUPPORT</span>
+        <q>We have a watercooler in the office with plenty of 5 gallon jugs in stock. We have
+        electrolyte packs next to the iPad station. Both are free for you to use daily&hellip;</q>
+        <span class="credit">KHEVAN DUECK &middot; MCKINNEY</span>
+      </div>
+      <div class="ex ex-good">
+        <span class="mark">&#10003; THIS WORKS</span>
+        <span class="said">THE MOVER WAS STRUGGLING WITH STACKING</span>
+        <q>Ask your lead to run point on the stack and send over some photos for some feedback,
+        young blood. We&rsquo;ll get you right.</q>
+        <span class="credit">ALEX TRAN &middot; HOUSTON</span>
+      </div>
+      <div class="ex ex-bad">
+        <span class="mark">&#10007; THIS DOES NOT &mdash; ALL FOUR ARE REAL PAIRS FROM THE APP</span>
+        <ul>
+          <li>Mover: <q>More hours</q> &rarr; Manager: <q>Working on the hours</q></li>
+          <li>Mover: <q>Truck loading</q> &rarr; Manager: <q>Acknowledges feedback</q></li>
+          <li>Mover: <q>Need more support with long jobs</q> &rarr; Manager: <q>Acknowledged and agrees</q></li>
+          <li>Mover: <q>Rippling</q> &rarr; Manager: <q>No feedback from [mover]</q></li>
+        </ul>
+      </div>
+      <p class="test">
+        <b>THE TEST &mdash;</b> <i>read the mover&rsquo;s three answers, then read yours. Could he
+        tell you read his?</i>
+      </p>
+    </div>
+
+    <div class="field">
+      <div class="field-head">
+        <h3>5 &middot; Expectations going forward</h3>
+        <span class="rate">FILLER RATE <b>14%</b> &mdash; BEST FIELD</span>
+      </div>
+      <div class="prompt">
+        <em>WHAT THE BOX SAYS</em>
+        <span>Lay out in plain english what they need to improve on in order to be considered one
+        of the best on the team. This should never be left empty.</span>
+      </div>
+      <p class="asks">
+        <b>What it is asking:</b> what they do next. This is the field we are best at and it is
+        still where the biggest single gap is: <b>one manager in the company routinely attaches a
+        date, and one has ever paired an expectation with a stated consequence. Out of 336
+        check-ins.</b> A named behavior plus a next action plus a date or a consequence is the
+        whole standard.
+      </p>
+      <div class="expect">
+        <span class="mark">&#9670; WHAT WE EXPECT TO SEE</span>
+        <q>Two things. Your stacking needs to get tighter &mdash; shadow your lead on the next two
+        loads, then run point on the third so I can watch you do it. And get Stage 4 finished by
+        10/15; you are at 62% and a task a day gets you there with room. If you are still under 80%
+        at the next check-in we will need to talk about a written plan.</q>
+        <span class="shape"><b>THE SHAPE &middot;</b> the named behavior &rarr; the specific next
+        action &rarr; a date or a consequence</span>
+      </div>
+
+      <div class="ex ex-good">
+        <span class="mark">&#10003; THIS WORKS &mdash; A DATE AND A CONSEQUENCE</span>
+        <q>Stay engaged in your training dashboard. If there is no progress made (you are currently
+        at 55%) by 9/11/26 a final written warning may be issued.</q>
+        <span class="credit">KHEVAN DUECK &middot; MCKINNEY</span>
+      </div>
+      <div class="ex ex-good">
+        <span class="mark">&#10003; THIS WORKS &mdash; NAMES THE CRAFT, NOT JUST THE APP</span>
+        <q>Stick to the leads hip when dealing with contract, switch mindset to how would I lead
+        this move and practice with recognizing accuracy of estimates.</q>
+        <span class="credit">HECTOR ZAVALA &middot; SOUTH AUSTIN</span>
+      </div>
+      <div class="ex ex-good">
+        <span class="mark">&#10003; THIS WORKS &mdash; TEACHES THE WHY</span>
+        <q>Continue to improve on efficiency. Efficiency is where damage free speed comes from.
+        Always think 2-3 steps ahead while on a job site, in order to take preemptive action that
+        will eliminate inefficiencies and help make the move go smoother.</q>
+        <span class="credit">SHANE HEABERLIN &middot; TAMPA</span>
+      </div>
+      <div class="ex ex-good">
+        <span class="mark">&#10003; THIS WORKS &mdash; PRAISE THAT STILL ASKS FOR SOMETHING</span>
+        <q>Continue to be a shining star out there and do not become complacent. If you ever need
+        support out in the field, be sure to bring that up early so we can get you the help that is
+        needed for the day!</q>
+        <span class="credit">JOEL VILLATORO &middot; HOUSTON</span>
+      </div>
+      <div class="ex ex-bad">
+        <span class="mark">&#10007; THIS DOES NOT</span>
+        <q>Do the training app</q> &middot; <q>Progress through the app</q> &mdash; the second one
+        appeared word for word as the expectation in all four of one manager&rsquo;s check-ins. Also
+        watch the opposite failure: one manager&rsquo;s 29 expectations are entirely about lates and
+        callouts, with nothing about the craft of moving. Attendance already has its own box.
+      </div>
+      <p class="test">
+        <b>THE TEST &mdash;</b> <i>is there a behavior, an action, and a date or a consequence?</i>
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>The same check-in, both ways</h2>
+      <div class="line"></div>
+    </div>
+    <p class="sec-note">
+      One real check-in from the app. Same mover, same week, same five answers from him. The left
+      column is what got written. The right column is the same conversation written to standard
+      &mdash; it is not longer by much, and it took the same sit-down.
+    </p>
+
+    <div class="movers">
+      <p class="kicker">WHAT THE MOVER WROTE</p>
+      <dl>
+        <dt>ROLE SATISFACTION (1-5)</dt><dd>5</dd>
+        <dt>ROLE MATCHES EXPECTATIONS (1-5)</dt><dd>5</dd>
+        <dt>WHAT IS GOING WELL</dt><dd>Team work.</dd>
+        <dt>WHERE THEY NEED SUPPORT</dt><dd>Rippling.</dd>
+      </dl>
+    </div>
+
+    <div class="sbs">
+      <div class="col is-bad">
+        <div class="col-head">&#10007; WHAT GOT WRITTEN</div>
+        <dl>
+          <dt>ATTENDANCE</dt>
+          <dd>Has used 1/8 lates, 0.5/4 call outs, no trends</dd>
+          <dt>HANDBOOK PROGRESSION</dt>
+          <dd>Has a solid velocity and has not been locked out</dd>
+          <dt>PEER FEEDBACK</dt>
+          <dd>Zero negative feedback</dd>
+          <dt>ACKNOWLEDGE THEIR FEEDBACK</dt>
+          <dd>No feedback from [mover]</dd>
+          <dt>EXPECTATIONS GOING FORWARD</dt>
+          <dd>Was late for the first time this morning, moving forward the expectation is that this
+          stays to an absolute minimum</dd>
+        </dl>
+      </div>
+
+      <div class="col is-good">
+        <div class="col-head">&#10003; SAME CONVERSATION, TO STANDARD</div>
+        <dl>
+          <dt>ATTENDANCE</dt>
+          <dd>1 of 8 late points, 0.5 of 4 callouts, no trend. The late was this morning and it is
+          his first &mdash; not a pattern yet, and I told him that.</dd>
+          <dt>HANDBOOK PROGRESSION</dt>
+          <dd>36% through Stage 4, no lockouts, velocity 1.0 tasks a day. That is on pace for the
+          quarter if he holds it.</dd>
+          <dt>PEER FEEDBACK</dt>
+          <dd>Asked his lead before we sat down &mdash; nothing negative, said he is easy to work
+          with on a truck. Passed that on to him.</dd>
+          <dt>ACKNOWLEDGE THEIR FEEDBACK</dt>
+          <dd>He said he needs support with Rippling. Walked him through clocking in and finding
+          his schedule on the iPad today, and sent him the how-to. If it happens again he texts me
+          before his shift, not after.</dd>
+          <dt>EXPECTATIONS GOING FORWARD</dt>
+          <dd>Keep the on-time record clean &mdash; one late in three weeks is fine, two more is a
+          conversation. Stay at a task a day so Stage 4 is done by 10/15. Next check-in we talk
+          about shadowing a lead.</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="guardrail" style="margin-top:16px">
+      <p class="kicker">WHAT CHANGED BETWEEN THE TWO COLUMNS</p>
+      <ul>
+        <li>
+          <b>The mover asked for one thing and got an answer to it.</b> He wrote <q>Rippling</q>
+          under where he needs support, and the left column records that he gave no feedback. That
+          is the single most common failure in the app and it is the whole reason this page exists.
+        </li>
+        <li>
+          <b>Peer feedback became a real answer</b> because somebody got asked. Same words of
+          effort, one conversation with a lead.
+        </li>
+        <li>
+          <b>Attendance and expectations stopped saying the same thing twice.</b> The left column
+          uses the attendance box for numbers and the expectations box for the same late. The right
+          column uses expectations for what happens next.
+        </li>
+        <li>
+          <b>There is a date.</b> <q>Stage 4 done by 10/15</q> is something he can be held to and
+          something you can follow up on. <q>Stays to an absolute minimum</q> is not.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>The bar &mdash; what makes a check-in complete</h2>
+      <div class="line"></div>
+    </div>
+    <p class="sec-note">
+      Five checks. Run them before you hit <q>Mark one-on-one complete</q>. If all five pass, the
+      check-in counts.
+    </p>
+
+    <div class="bar">
+      <div>
+        <span class="n">1</span>
+        <span><b>Five answers, five real sentences.</b> No bare score, no <q>N/A</q>, no dash, no
+        single word, no <q>same as above</q>, no <q>covered in week 1.</q> If it is under about
+        fifteen characters it is not an answer.</span>
+      </div>
+      <div>
+        <span class="n">2</span>
+        <span><b>The acknowledge box answers what the mover actually wrote.</b> Quote it back, then
+        say what you are doing about it. If he asked for nothing, say who you asked and that he had
+        nothing to raise.</span>
+      </div>
+      <div>
+        <span class="n">3</span>
+        <span><b>Expectations names a behavior, a next action, and a date or a consequence.</b>
+        This is the field that has to hold up if the conversation ever becomes a written warning
+        &mdash; the question later is always <q>did they know?</q></span>
+      </div>
+      <div>
+        <span class="n">4</span>
+        <span><b>Nothing is copy-pasted from another mover.</b> If all five fields match somebody
+        else&rsquo;s word for word, the conversation did not happen. 23 check-ins in the company
+        currently fail this.</span>
+      </div>
+      <div>
+        <span class="n">5</span>
+        <span><b>It happens within two work days of the mover answering.</b> Same window as the
+        day-one check-in on a new hire. Right now 95 movers are waiting, the oldest 13 days.</span>
+      </div>
+    </div>
+
+    <div class="tally" style="margin-top:16px">
+      <p class="kicker">WHAT FILLER LOOKS LIKE &mdash; 42% OF 1,680 ANSWERS</p>
+      <ul>
+        <li><b>208</b> answers of <q>10/10</q> or another bare score</li>
+        <li><b>131</b> answers of <q>N/A</q> or <q>NA</q></li>
+        <li><b>39</b> <q>Done</q> &middot; <b>33</b> <q>GTG</q> &middot; <b>25</b> single dashes</li>
+        <li><b>65</b> punts to a different week&rsquo;s check-in &mdash; <q>covered with week 1</q></li>
+        <li><b>23</b> check-ins where all five answers are copy-pasted from another mover</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>When a check-in becomes a warning</h2>
+      <div class="line"></div>
+    </div>
+    <p class="sec-note">
+      This is the part with real consequences attached, so it gets its own section. Phase 1 of the
+      onboarding change says it plainly: <b>week 1 behind is a redirect, week 2 behind is a formal
+      warning and a keep-or-go decision.</b> That ladder only works if the check-in is carrying the
+      paper. Right now, mostly, it is not.
+    </p>
+
+    <div class="lead">
+      <p class="kicker">WHAT WE WENT LOOKING FOR</p>
+      <h3>Across 348 completed check-ins and 1,740 manager answers, two mention a warning. Both were
+      written by the same manager.</h3>
+      <p>
+        Not two per branch. Two in the company. And <b>neither of them is a warning that was
+        actually issued</b> &mdash; one is a warning that <i>may</i> be issued if a bar is missed by
+        a date, and the other is a manager explaining to a mover how warnings work at all.
+      </p>
+      <p>
+        Meanwhile, on the other side of the same app: <b>216 of our 275 movers in training have at
+        least one lockout on record with coaching logged in Rippling.</b> Nine of those 216 have a
+        check-in that mentions it. 128 have a completed check-in that never brings it up, and 79
+        have a coaching record and <b>no completed check-in at all.</b>
+      </p>
+      <p class="why">
+        Read those two paragraphs together and you have the problem. We are building two separate
+        records about the same person &mdash; a disciplinary trail in Rippling and a conversation
+        trail in the app &mdash; and they do not reference each other. If it ever matters, the
+        question is always the same one: <b>did they know?</b> The check-in is the answer to that
+        question, or there isn&rsquo;t one.
+      </p>
+    </div>
+
+    <h3 style="font-family:'Bebas Neue','Roboto Condensed',Impact,sans-serif;font-weight:400;
+      font-size:21px;letter-spacing:.05em;color:var(--ink);margin:34px 0 6px">
+      The escalation ladder &mdash; what the check-in has to say at each step</h3>
+    <p class="sec-note" style="margin-bottom:16px">
+      Three steps. The only one most of us are writing today is step one, and usually without the
+      date that makes it count.
+    </p>
+
+    <div class="bar">
+      <div>
+        <span class="n">1</span>
+        <span><b>Behind for the first time &mdash; a redirect, no warning.</b> The expectations box
+        says what to fix and by when. That is the whole step. <b>It is also the step that makes the
+        next one legitimate</b> &mdash; a warning with no documented redirect in front of it is a
+        warning nobody saw coming.</span>
+      </div>
+      <div>
+        <span class="n">2</span>
+        <span><b>Still behind at the next check-in &mdash; state the consequence before it
+        happens.</b> Name the bar, name the date, name what happens if the date passes. The example
+        below is the only one of these in the company and it is exactly right.</span>
+      </div>
+      <div>
+        <span class="n">3</span>
+        <span><b>The warning gets issued &mdash; write that in the check-in.</b> What was issued,
+        the date it was issued, and what has to change to close it out. If it is only in Rippling,
+        the app says this mover was fine and Rippling says he was warned. <b>Zero check-ins in the
+        company currently do this.</b></span>
+      </div>
+    </div>
+
+    <div class="expect" style="margin-top:16px">
+      <span class="mark">&#9670; STEP 2 DONE RIGHT &mdash; THE ONLY ONE IN THE COMPANY</span>
+      <q>Stay engaged in your training dashboard. If there is no progress made (you are currently
+      at 55%) by 9/11/26 a final written warning may be issued.</q>
+      <span class="shape"><b>WHY IT WORKS &middot;</b> a number he can check, a date he can count
+      to, and the consequence named out loud before it arrives. Nothing in that sentence is a
+      surprise later.</span>
+      <span class="alt">
+        <em>CREDIT</em>
+        <q>Khevan Dueck &middot; McKinney &mdash; written to Isaac on 9/4.</q>
+      </span>
+    </div>
+
+    <div class="expect">
+      <span class="mark">&#9670; AND THE OTHER ONE &mdash; EXPLAINING THE SYSTEM ITSELF</span>
+      <q>&hellip;We issue warnings based on app lock outs, if they are inaccurate let us know and we
+      can review them directly. Right now the process is new and everyone is starting from the
+      bottom so there may be a few inaccurate lockouts and automatically issued warnings. Much like
+      with Samsara nothing sticks to your &ldquo;permanent record&rdquo; until it has been double
+      checked.</q>
+      <span class="shape"><b>WHY IT WORKS &middot;</b> the mover had raised that he was logged out
+      early. Instead of <q>acknowledged</q>, he got told how the mechanism works, that it is new,
+      that it can be wrong, and exactly what to do if it is. That is the acknowledge box working
+      as designed.</span>
+      <span class="alt">
+        <em>CREDIT</em>
+        <q>Khevan Dueck &middot; McKinney &mdash; written to Blaise on 9/8.</q>
+      </span>
+    </div>
+
+    <div class="tally" style="margin-top:16px">
+      <p class="kicker">STEP 3 &mdash; WHAT IT SHOULD LOOK LIKE, BECAUSE NOBODY HAS WRITTEN ONE YET</p>
+      <ul>
+        <li>
+          <q>Final written warning issued in Rippling on 9/12 for training progress. You were at
+          55% on 9/4 with a 9/11 date on it and finished at 61%. To close this out: Stage 4 complete
+          by 9/26, and I need to see a task a day between now and then. We will look at it again at
+          your next check-in.</q>
+        </li>
+        <li>
+          <b>What that sentence does:</b> it names what was issued and when, ties it back to the
+          bar and the date the mover already had in writing, and gives him a way out with a
+          deadline on it. All three are things you would want in front of you if this ever became
+          an unemployment question.
+        </li>
+      </ul>
+    </div>
+
+    <div class="guardrail" style="margin-top:16px">
+      <p class="kicker">TWO THINGS ON US, NOT ON YOU</p>
+      <ul>
+        <li>
+          <b>Warnings are being issued automatically off app lockouts, and some of them are
+          wrong.</b> That is not a rumor &mdash; it is in a check-in, from a manager, to a mover.
+          Of the 216 movers carrying a lockout record, <b>182 have nothing but a bulk backfilled
+          entry</b>, which is not the same thing as a manager having had a conversation. Who
+          double-checks an automatic warning before it counts is a question for HR and it is
+          getting asked.
+        </li>
+        <li>
+          <b>The lock moved to work days, not calendar days.</b> That was the fix asked for in the
+          9/3 manager session and it has shipped &mdash; days off, RDOs and open trucks should stop
+          triggering lockouts now. If you see one that still looks wrong, say so rather than
+          coaching against it.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>What we are fixing in the form</h2>
+      <div class="line"></div>
+    </div>
+    <p class="sec-note">
+      Some of this is on us, not on you. The report found something worth acting on: how well a
+      field gets answered tracks almost exactly with how much guidance the box gives you.
+    </p>
+
+    <div class="practices">
+      <div class="practice">
+        <strong>The acknowledge box gets a worked example</strong>
+        <span>It is the only one of the five without an <q>Ex.</q> answer, and it is the worst
+        performing at 63%. The three fields with worked examples all do better. Showing the
+        finished answer is doing real work.</span>
+      </div>
+      <div class="practice">
+        <strong>&ldquo;This should never be left empty&rdquo; goes on all five</strong>
+        <span>Right now it is only on expectations &mdash; the best-answered field in the app at
+        14% filler. One line of text, four more boxes.</span>
+      </div>
+      <div class="practice">
+        <strong>A minimum answer length</strong>
+        <span>Today a single dash submits and locks the check-in as complete. That is how 131
+        <q>N/A</q>-class answers got in. A floor stops a bare score from counting.</span>
+      </div>
+      <div class="practice">
+        <strong>The guidance should stay visible while you type</strong>
+        <span>The prompt and the example live in the placeholder, so they vanish the moment you
+        type a character. You cannot re-read the example while writing the answer. That is a fixable
+        annoyance, not a manager problem.</span>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Bebas Neue','Roboto Condensed',Impact,sans-serif;font-weight:400;
+      font-size:21px;letter-spacing:.05em;color:var(--ink);margin:30px 0 6px">
+      The Ex. lines we are proposing for the boxes</h3>
+    <p class="sec-note" style="margin-bottom:16px">
+      These are the model answers above, cut down to fit in the box as guidance. Four of the five
+      fields already carry an <q>Ex.</q>; <b>acknowledge carries none, and it is the worst field in
+      the app.</b> Square brackets are the part the manager fills in.
+    </p>
+
+    <div class="formfix">
+
+      <div class="fx is-new">
+        <div class="which">ACKNOWLEDGE THEIR FEEDBACK <span class="flag">NEW &mdash; NO EXAMPLE TODAY</span></div>
+        <code>What did the mover ask for, and what are you doing about it? Answer the thing they raised.
+
+Ex. You said you need more support on long jobs. Here is what we are doing: [the answer]. If it happens again, [what they should do].</code>
+        <span class="note">The prompt itself also needs rewriting. As written &mdash; <q>Did the
+        mover ask any questions or provide any feedback&hellip;</q> &mdash; it reads as a yes/no
+        question, which is why the honest answers in the app are <q>Yes</q> and transcriptions of
+        what the mover said.</span>
+      </div>
+
+      <div class="fx">
+        <div class="which">ATTENDANCE <span class="flag">KEEP, TIGHTEN</span></div>
+        <code>Any attendance trends to address? Consistently late? Always calls out on weekends? Include their EMC Games attendance score.
+
+Ex. You are at X of 8 late points and X of 4 callout points, and your Games attendance score is X.X. [What you see in that.] [What changes going forward.]</code>
+        <span class="note">Three changes: the denominators, a what-changes clause, and
+        <b>the Games attendance score, which the box does not ask for today.</b> That score is the
+        one attendance number with a payout attached to it, and it belongs in the same conversation
+        as the late points rather than in a separate one nobody has.</span>
+      </div>
+
+      <div class="fx">
+        <div class="which">HANDBOOK PROGRESSION <span class="flag">KEEP, TIGHTEN</span></div>
+        <code>Ex. You are at X% with a velocity of X tasks a day and [no lockouts / X lockouts] since we last talked. That puts you [ahead of / behind] pace. [The next specific step.]</code>
+      </div>
+
+      <div class="fx">
+        <div class="which">PEER FEEDBACK <span class="flag">KEEP, TIGHTEN</span></div>
+        <code>Ex. Asked [lead] and [crew member]. They said [what is working]. The one thing that came back was [what to tighten].</code>
+        <span class="note">Naming who you asked is the whole fix here. It turns the box from a
+        judgement into an errand, and an errand is harder to answer with <q>N/A</q>.</span>
+      </div>
+
+      <div class="fx">
+        <div class="which">EXPECTATIONS GOING FORWARD <span class="flag">ADD AN EX.</span></div>
+        <code>Lay out in plain english what they need to improve on in order to be considered one of the best on the team. This should never be left empty.
+
+Ex. [Behavior] &mdash; [specific next action]. Get [X] done by [date]. If that has not happened by then, [consequence].</code>
+        <span class="note">This is already the best field at 14% filler on the strength of the
+        never-leave-empty line alone. It has no worked example, and it is also the field where one
+        manager in the company routinely writes a date. Both facts point the same way.</span>
+      </div>
+
+    </div>
+
+    <div class="guardrail" style="margin-top:16px">
+      <p class="kicker">SO WE ARE CLEAR ON SEQUENCE</p>
+      <ul>
+        <li>
+          <b>We are not going to train our way out of a form defect.</b> The acknowledge field is
+          the worst in the app and it is also the only one with no example &mdash; that is a design
+          problem before it is a manager problem. Those four fixes are going to Mike.
+        </li>
+        <li>
+          <b>And the standard on this page still applies now.</b> Two thirds of movers are getting
+          a score back today, and not one of these fixes is needed to write a real sentence in five
+          boxes. The Games attendance score is already on a dashboard you open daily &mdash; nothing
+          on this page is waiting on a build.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    Built from the company-wide check-in review Mike pulled on 8 September 2026 &mdash; all 10
+    branches, 274 active trainees, 581 check-in records. The warning and lockout figures in
+    &ldquo;When a check-in becomes a warning&rdquo; come from a second read of the same records on
+    9 September, which is why the check-in count there is 348 rather than 336 &mdash; a day of work
+    landed in between. Mover quotes are reproduced without names.
+    Weak examples are deliberately unattributed; the pattern is the point.
+    <br>Anything here you think is wrong, or a call you need made: put it on your pulse or come
+    straight to me.
+    <br>&mdash; Brian
+  </footer>
+
+</div>
+
+</body>
+</html>
